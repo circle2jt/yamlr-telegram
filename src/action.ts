@@ -1,0 +1,71 @@
+import assert from 'assert'
+import { Job } from 'ymlr/src/components/.job/job'
+import { ActionProps } from './action.props'
+import { Bot } from './bot'
+
+/** |**  ymlr-telegram'action
+  Handle callback in inline keyboard
+  @example
+  ```yaml
+    - ymlr-telegram'action:
+        token: ${BOT_TOKEN}
+        title: Handle inline keyboard when user pick one
+        name: callback
+        runs:
+          # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
+          - vars:
+              callbackData: ${this.parentState.botCtx.update.callback_query.data}   # => VN/US
+          - echo: ${vars.callbackData}
+          - exec'js: |
+              this.parentState.botCtx.reply('Picked ' + vars.callbackData)
+
+    - ymlr-telegram'send:
+        token: ${BOT_TOKEN}
+        chatID: ${CHAT_ID}
+        text: Send a message to help users to choose a language
+        opts:
+          reply_markup:
+            one_time_keyboard: true
+            inline_keyboard:
+              -
+                - text: VietNam
+                  callback_data: VN
+                - text: US
+                  callback_data: US
+  ```
+*/
+export class Action extends Job {
+  name?: string
+  token?: string
+
+  bot?: Bot
+
+  constructor({ name, token, ...props }: ActionProps) {
+    super(props as any)
+    Object.assign(this, { name, token })
+    this.$$ignoreEvalProps.push('bot')
+  }
+
+  async execJob() {
+    assert(this.name, '"name" is required')
+    let bot: Bot | undefined
+    if (this.token) {
+      bot = this.bot = new Bot({
+        token: this.token
+      })
+    } else {
+      bot = this.getParentByClassName<Bot>(Bot)
+    }
+    assert(bot)
+    bot.telegraf.action(this.name, async ctx => {
+      this.logger.debug(`⇠┆${this.name}┆⇠ \t%j`, ctx.message)
+      await this.addJobData({ botCtx: ctx })
+    })
+    await this.bot?.exec()
+  }
+
+  async stop() {
+    this.bot?.telegraf.stop()
+    await super.stop()
+  }
+}
