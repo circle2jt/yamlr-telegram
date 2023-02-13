@@ -1,0 +1,13 @@
+title: Prerelease the version
+runs:
+- scene:
+    path: https://raw.githubusercontent.com/circle2jt/ymlr/main/shares/version.yaml
+    vars:
+      force: true
+      preid: alpha
+      versionName: prerelease
+      changeDir: ~~/changelogs
+      changeFile: ~~/CHANGELOG.md
+      commitFiles: 
+        - ~~/README.md
+        - ~~/package.json
