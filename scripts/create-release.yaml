@@ -13,7 +13,7 @@ runs:
         repo: ymlr-telegram
         tag: "%s"
         packageJson: ~~/package.json
-        validTagRegex: "^\d+\.\d+\.\d+$"
+        validTagRegex: "^\\d+\\.\\d+\\.\\d+$"
         name: "Release %s"
         draft: false
         prerelease: false
