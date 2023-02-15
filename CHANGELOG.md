@@ -2,12 +2,26 @@
 
 ## History
 
+- [1.0.0.md](#1676439174807)  -  _2/15/2023, 12:32:54 PM_
 - [1.0.0-alpha.1.md](#1676432367640)  -  _2/15/2023, 10:39:27 AM_
 - [0.0.1.md](#1676278610141)  -  _2/13/2023, 3:56:50 PM_
 - [0.0.1-alpha.2.md](#1676278281173)  -  _2/13/2023, 3:51:21 PM_
 
 ## Details
 
+<a id="1676439174807"></a>
+### 1.0.0
+
+* chore: prerelease 1.0.0-alpha.1 (67da7a0)
+* refactor!: integrate with ymlr v1 (b356c70)
+* chore: patch 0.0.1 (930855a)
+* chore: prerelease 0.0.1-alpha.2 (2ee7ea9)
+* ci: merge next/patch to one scene file (247f1d8)
+* ci: auto create a new release (aee6fd0)
+* ci: auto create a new tag (ee82078)
+* ci: add script to update a new version (46486b9)
+* Initial commit (0e64a42)
+  
 <a id="1676432367640"></a>
 ### 1.0.0-alpha.1
 
