@@ -10,8 +10,8 @@ import { On } from './on'
     - ymlr-telegram:
         token: ${BOT_TOKEN}
         runs:
-          - ymlr-telegram'send:
-              title: Send a hi message
+          - name: Send a hi message
+            ymlr-telegram'send:
               chatID: ${TELEGRAM_CHAT_ID}
               text: Hi there
 

@@ -38,22 +38,22 @@ Example:
   - ymlr-telegram:
       token: ${BOT_TOKEN}
       runs:
-        - ymlr-telegram'send:
-            title: Send a hi message
+        - name: Send a hi message
+          ymlr-telegram'send:
             chatID: ${TELEGRAM_CHAT_ID}
             # chatIDs:
             #  - ${TELEGRAM_CHAT_ID_1}
             #  - ${TELEGRAM_CHAT_ID_2}
             text: Hi there
 
-        - ymlr-telegram'command:
-            title: Handle custom command
+        - name: Handle custom command
+          ymlr-telegram'command:
             name: custom           # /custom
             runs:
               - echo: ${this.parentState.botCtx.message.text}
 
-        - ymlr-telegram'hears:
-            title: Handle when user say hi
+        - name: Handle when user say hi
+          ymlr-telegram'hears:
             text: Hi
             runs:
               - echo: ${this.parentState.botCtx.message.text}
@@ -67,9 +67,9 @@ Handle callback in inline keyboard
 Example:  
 
 ```yaml
-  - ymlr-telegram'action:
+  - name: Handle inline keyboard when user pick one
+    ymlr-telegram'action:
       token: ${BOT_TOKEN}
-      title: Handle inline keyboard when user pick one
       name: callback
       runs:
         # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
@@ -102,9 +102,9 @@ Handle command in chat. Example: "/start", "/custom" ...
 Example:  
 
 ```yaml
-  - ymlr-telegram'command:
+  - name: Handle custom command
+    ymlr-telegram'command:
       token: ${BOT_TOKEN}
-      title: Handle custom command
       name: custom           # /custom
       runs:
         # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
@@ -123,9 +123,9 @@ It's trigged when text in the chat is matched in the "text" property
 Example:  
 
 ```yaml
-  - ymlr-telegram'hears:
+  - name: User say hi
+    ymlr-telegram'hears:
       token: ${BOT_TOKEN}
-      title: User say hi
       text: Hi
       runs:
         # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
@@ -144,9 +144,9 @@ Listen events directly from telegram. Example: "sticker", "text"...
 Example:  
 
 ```yaml
-  - ymlr-telegram'on:
+  - name: Handle text in the chat
+    ymlr-telegram'on:
       token: ${BOT_TOKEN}
-      title: Handle text in the chat
       filter: text
       runs:
         # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
@@ -317,8 +317,8 @@ Example:
   - ymlr-telegram:
       token: ${BOT_TOKEN}
       runs:
-        - ymlr-telegram'send:
-            title: Send a hi message
+        - name: Send a hi message
+          ymlr-telegram'send:
             chatID: ${TELEGRAM_CHAT_ID}
             text: Hi there
 

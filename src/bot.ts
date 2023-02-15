@@ -1,9 +1,9 @@
 import assert from 'assert'
+import { Telegraf } from 'telegraf'
 import { ElementShadow } from 'ymlr/src/components/element-shadow'
 import { Group } from 'ymlr/src/components/group/group'
 import { GroupItemProps, GroupProps } from 'ymlr/src/components/group/group.props'
 import { sleep } from 'ymlr/src/libs/time'
-import { Telegraf } from 'telegraf'
 import { BotProps } from './bot.props'
 
 /** |**  ymlr-telegram
@@ -13,22 +13,22 @@ import { BotProps } from './bot.props'
     - ymlr-telegram:
         token: ${BOT_TOKEN}
         runs:
-          - ymlr-telegram'send:
-              title: Send a hi message
+          - name: Send a hi message
+            ymlr-telegram'send:
               chatID: ${TELEGRAM_CHAT_ID}
               # chatIDs:
               #  - ${TELEGRAM_CHAT_ID_1}
               #  - ${TELEGRAM_CHAT_ID_2}
               text: Hi there
 
-          - ymlr-telegram'command:
-              title: Handle custom command
+          - name: Handle custom command
+            ymlr-telegram'command:
               name: custom           # /custom
               runs:
                 - echo: ${this.parentState.botCtx.message.text}
 
-          - ymlr-telegram'hears:
-              title: Handle when user say hi
+          - name: Handle when user say hi
+            ymlr-telegram'hears:
               text: Hi
               runs:
                 - echo: ${this.parentState.botCtx.message.text}

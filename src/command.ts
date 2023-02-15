@@ -7,9 +7,9 @@ import { CommandProps } from './command.props'
   Handle command in chat. Example: "/start", "/custom" ...
   @example
   ```yaml
-    - ymlr-telegram'command:
+    - name: Handle custom command
+      ymlr-telegram'command:
         token: ${BOT_TOKEN}
-        title: Handle custom command
         name: custom           # /custom
         runs:
           # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf

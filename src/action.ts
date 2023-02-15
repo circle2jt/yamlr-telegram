@@ -7,9 +7,9 @@ import { Bot } from './bot'
   Handle callback in inline keyboard
   @example
   ```yaml
-    - ymlr-telegram'action:
+    - name: Handle inline keyboard when user pick one
+      ymlr-telegram'action:
         token: ${BOT_TOKEN}
-        title: Handle inline keyboard when user pick one
         name: callback
         runs:
           # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf

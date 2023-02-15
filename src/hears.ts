@@ -7,9 +7,9 @@ import { HearsProps } from './hears.props'
   It's trigged when text in the chat is matched in the "text" property
   @example
   ```yaml
-    - ymlr-telegram'hears:
+    - name: User say hi
+      ymlr-telegram'hears:
         token: ${BOT_TOKEN}
-        title: User say hi
         text: Hi
         runs:
           # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf

@@ -7,9 +7,9 @@ import { OnProps } from './on.props'
   Listen events directly from telegram. Example: "sticker", "text"...
   @example
   ```yaml
-    - ymlr-telegram'on:
+    - name: Handle text in the chat
+      ymlr-telegram'on:
         token: ${BOT_TOKEN}
-        title: Handle text in the chat
         filter: text
         runs:
           # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
