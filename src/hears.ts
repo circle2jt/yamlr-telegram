@@ -12,12 +12,12 @@ import { HearsProps } from './hears.props'
         token: ${BOT_TOKEN}
         text: Hi
         runs:
-          # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
+          # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
           - vars:
-              message: ${this.parentState.botCtx.message.text}
-          - echo: ${vars.message}
+              message: ${$parentState.botCtx.message.text}
+          - echo: ${ $vars.message }
           - exec'js: |
-              this.parentState.botCtx.reply('Hi there')
+              $parentState.botCtx.reply('Hi there')
   ```
 */
 export class Hears extends Job {
@@ -29,7 +29,7 @@ export class Hears extends Job {
   constructor({ text, token, ...props }: HearsProps) {
     super(props as any)
     Object.assign(this, { text, token })
-    this.$$ignoreEvalProps.push('bot')
+    this.ignoreEvalProps.push('bot')
   }
 
   async execJob() {
@@ -40,7 +40,7 @@ export class Hears extends Job {
         token: this.token
       })
     } else {
-      bot = this.getParentByClassName<Bot>(Bot)
+      bot = this.proxy.getParentByClassName<Bot>(Bot)?.element
     }
     assert(bot)
     bot.telegraf.hears(this.text, async ctx => {

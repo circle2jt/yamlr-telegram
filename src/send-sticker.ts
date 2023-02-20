@@ -1,8 +1,8 @@
 import assert from 'assert'
-import { FileRemote } from 'ymlr/src/libs/file-remote'
 import { Telegraf } from 'telegraf'
 import { InputFile } from 'telegraf/typings/core/types/typegram'
 import { ExtraSticker } from 'telegraf/typings/telegram-types'
+import { FileRemote } from 'ymlr/src/libs/file-remote'
 import { SendStickerProps } from './send-sticker.props'
 import { SendAbstract } from './send.abstract'
 
@@ -36,7 +36,7 @@ export class SendSticker extends SendAbstract {
 
   private get source() {
     assert(this.sticker, '"sticker" is required')
-    const fileRemote = new FileRemote(this.sticker, this.scene)
+    const fileRemote = new FileRemote(this.sticker, this.proxy.scene)
     let file: InputFile | string
     if (fileRemote.isRemote) {
       file = { url: fileRemote.uri }

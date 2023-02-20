@@ -50,13 +50,13 @@ Example:
           ymlr-telegram'command:
             name: custom           # /custom
             runs:
-              - echo: ${this.parentState.botCtx.message.text}
+              - echo: ${ $parentState.botCtx.message.text }
 
         - name: Handle when user say hi
           ymlr-telegram'hears:
             text: Hi
             runs:
-              - echo: ${this.parentState.botCtx.message.text}
+              - echo: ${ $parentState.botCtx.message.text }
 ```  
 
 
@@ -72,12 +72,12 @@ Example:
       token: ${BOT_TOKEN}
       name: callback
       runs:
-        # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
+        # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
         - vars:
-            callbackData: ${this.parentState.botCtx.update.callback_query.data}   # => VN/US
-        - echo: ${vars.callbackData}
+            callbackData: ${$parentState.botCtx.update.callback_query.data}   # => VN/US
+        - echo: ${ $vars.callbackData }
         - exec'js: |
-            this.parentState.botCtx.reply('Picked ' + vars.callbackData)
+            $parentState.botCtx.reply('Picked ' + $vars.callbackData)
 
   - ymlr-telegram'send:
       token: ${BOT_TOKEN}
@@ -107,12 +107,12 @@ Example:
       token: ${BOT_TOKEN}
       name: custom           # /custom
       runs:
-        # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
+        # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
         - vars:
-            message: ${this.parentState.botCtx.message.text}
-        - echo: ${vars.message}
+            message: ${ $parentState.botCtx.message.text }
+        - echo: ${ $vars.message }
         - exec'js: |
-            this.parentState.botCtx.reply('This is custom command')
+            $parentState.botCtx.reply('This is custom command')
 ```  
 
 
@@ -128,12 +128,12 @@ Example:
       token: ${BOT_TOKEN}
       text: Hi
       runs:
-        # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
+        # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
         - vars:
-            message: ${this.parentState.botCtx.message.text}
-        - echo: ${vars.message}
+            message: ${$parentState.botCtx.message.text}
+        - echo: ${ $vars.message }
         - exec'js: |
-            this.parentState.botCtx.reply('Hi there')
+            $parentState.botCtx.reply('Hi there')
 ```  
 
 
@@ -149,12 +149,12 @@ Example:
       token: ${BOT_TOKEN}
       filter: text
       runs:
-        # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
+        # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
         - vars:
-            message: ${this.parentState.botCtx.message.text}
-        - echo: ${vars.message}
+            message: ${$parentState.botCtx.message.text}
+        - echo: ${ $vars.message }
         - exec'js: |
-            this.parentState.botCtx.reply('Hi there')
+            $parentState.botCtx.reply('Hi there')
 ```  
 
 
@@ -197,7 +197,7 @@ Edit a message
 ```yaml
   - ymlr-telegram'send:
       token: ${BOT_TOKEN}
-      editMessageID: ${vars.messageID}        # Message ID to edit
+      editMessageID: ${ $vars.messageID }        # Message ID to edit
       chatID: ${TELEGRAM_CHAT_ID}
       text: Hi again
 ```
@@ -206,7 +206,7 @@ Remove a message
 ```yaml
   - ymlr-telegram'send:
       token: ${BOT_TOKEN}
-      removeMessageID: ${vars.messageID}      # Message ID to remove
+      removeMessageID: ${ $vars.messageID }      # Message ID to remove
       chatID: ${TELEGRAM_CHAT_ID}
 ```
 
@@ -214,7 +214,7 @@ Reply a message
 ```yaml
   - ymlr-telegram'send:
       token: ${BOT_TOKEN}
-      replyMessageID: ${vars.messageID}       # Message ID to reply
+      replyMessageID: ${ $vars.messageID }       # Message ID to reply
       chatID: ${TELEGRAM_CHAT_ID}
       text: Hi again
 ```  

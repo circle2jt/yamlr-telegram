@@ -12,12 +12,12 @@ import { OnProps } from './on.props'
         token: ${BOT_TOKEN}
         filter: text
         runs:
-          # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
+          # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
           - vars:
-              message: ${this.parentState.botCtx.message.text}
-          - echo: ${vars.message}
+              message: ${$parentState.botCtx.message.text}
+          - echo: ${ $vars.message }
           - exec'js: |
-              this.parentState.botCtx.reply('Hi there')
+              $parentState.botCtx.reply('Hi there')
   ```
 */
 export class On extends Job {
@@ -29,7 +29,7 @@ export class On extends Job {
   constructor({ filter, token, ...props }: OnProps) {
     super(props as any)
     Object.assign(this, { filter, token })
-    this.$$ignoreEvalProps.push('bot')
+    this.ignoreEvalProps.push('bot')
   }
 
   async execJob() {
@@ -40,7 +40,7 @@ export class On extends Job {
         token: this.token
       })
     } else {
-      bot = this.getParentByClassName<Bot>(Bot)
+      bot = this.proxy.getParentByClassName<Bot>(Bot)?.element
     }
     assert(bot)
     bot.telegraf.on(this.filter as any, async ctx => {

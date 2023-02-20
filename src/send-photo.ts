@@ -1,7 +1,7 @@
 import assert from 'assert'
-import { FileRemote } from 'ymlr/src/libs/file-remote'
 import { Telegraf } from 'telegraf'
 import { ExtraPhoto } from 'telegraf/typings/telegram-types'
+import { FileRemote } from 'ymlr/src/libs/file-remote'
 import { SendPhotoProps } from './send-photo.props'
 import { SendAbstract } from './send.abstract'
 
@@ -36,7 +36,7 @@ export class SendPhoto extends SendAbstract {
 
   protected get source() {
     assert(this.file, '"file" is required')
-    const fileRemote = new FileRemote(this.file, this.scene)
+    const fileRemote = new FileRemote(this.file, this.proxy.scene)
     const file = fileRemote.isRemote ? { url: fileRemote.uri } : { source: fileRemote.uri }
     return file
   }

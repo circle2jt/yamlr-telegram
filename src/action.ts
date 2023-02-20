@@ -12,12 +12,12 @@ import { Bot } from './bot'
         token: ${BOT_TOKEN}
         name: callback
         runs:
-          # this.parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
+          # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
           - vars:
-              callbackData: ${this.parentState.botCtx.update.callback_query.data}   # => VN/US
-          - echo: ${vars.callbackData}
+              callbackData: ${$parentState.botCtx.update.callback_query.data}   # => VN/US
+          - echo: ${ $vars.callbackData }
           - exec'js: |
-              this.parentState.botCtx.reply('Picked ' + vars.callbackData)
+              $parentState.botCtx.reply('Picked ' + $vars.callbackData)
 
     - ymlr-telegram'send:
         token: ${BOT_TOKEN}
@@ -43,7 +43,7 @@ export class Action extends Job {
   constructor({ name, token, ...props }: ActionProps) {
     super(props as any)
     Object.assign(this, { name, token })
-    this.$$ignoreEvalProps.push('bot')
+    this.ignoreEvalProps.push('bot')
   }
 
   async execJob() {
@@ -54,7 +54,7 @@ export class Action extends Job {
         token: this.token
       })
     } else {
-      bot = this.getParentByClassName<Bot>(Bot)
+      bot = this.proxy.getParentByClassName<Bot>(Bot)?.element
     }
     assert(bot)
     bot.telegraf.action(this.name, async ctx => {

@@ -1,6 +1,7 @@
 import assert from 'assert'
 import { Telegraf } from 'telegraf'
-import { ElementShadow } from 'ymlr/src/components/element-shadow'
+import { ElementProxy } from 'ymlr/src/components/element-proxy'
+import { Element } from 'ymlr/src/components/element.interface'
 import { Group } from 'ymlr/src/components/group/group'
 import { GroupItemProps, GroupProps } from 'ymlr/src/components/group/group.props'
 import { sleep } from 'ymlr/src/libs/time'
@@ -25,13 +26,13 @@ import { BotProps } from './bot.props'
             ymlr-telegram'command:
               name: custom           # /custom
               runs:
-                - echo: ${this.parentState.botCtx.message.text}
+                - echo: ${ $parentState.botCtx.message.text }
 
           - name: Handle when user say hi
             ymlr-telegram'hears:
               text: Hi
               runs:
-                - echo: ${this.parentState.botCtx.message.text}
+                - echo: ${ $parentState.botCtx.message.text }
   ```
 */
 export class Bot extends Group<GroupProps, GroupItemProps> {
@@ -45,7 +46,7 @@ export class Bot extends Group<GroupProps, GroupItemProps> {
   constructor({ token, ...props }: BotProps) {
     super(props)
     Object.assign(this, { token })
-    this.$$ignoreEvalProps.push('telegraf', '_telegraf')
+    this.ignoreEvalProps.push('telegraf', '_telegraf')
   }
 
   async exec(input?: any) {
@@ -58,7 +59,7 @@ export class Bot extends Group<GroupProps, GroupItemProps> {
       await sleep(100)
     }
     const [rs] = await Promise.all(proms)
-    return rs as ElementShadow[]
+    return rs as Array<ElementProxy<Element>>
   }
 
   async stop() {

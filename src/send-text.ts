@@ -39,7 +39,7 @@ import { SendAbstract } from './send.abstract'
   ```yaml
     - ymlr-telegram'send:
         token: ${BOT_TOKEN}
-        editMessageID: ${vars.messageID}        # Message ID to edit
+        editMessageID: ${ $vars.messageID }        # Message ID to edit
         chatID: ${TELEGRAM_CHAT_ID}
         text: Hi again
   ```
@@ -48,7 +48,7 @@ import { SendAbstract } from './send.abstract'
   ```yaml
     - ymlr-telegram'send:
         token: ${BOT_TOKEN}
-        removeMessageID: ${vars.messageID}      # Message ID to remove
+        removeMessageID: ${ $vars.messageID }      # Message ID to remove
         chatID: ${TELEGRAM_CHAT_ID}
   ```
 
@@ -56,7 +56,7 @@ import { SendAbstract } from './send.abstract'
   ```yaml
     - ymlr-telegram'send:
         token: ${BOT_TOKEN}
-        replyMessageID: ${vars.messageID}       # Message ID to reply
+        replyMessageID: ${ $vars.messageID }       # Message ID to reply
         chatID: ${TELEGRAM_CHAT_ID}
         text: Hi again
   ```
