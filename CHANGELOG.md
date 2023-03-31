@@ -2,6 +2,7 @@
 
 ## History
 
+- [1.1.1.md](#1680247174205)  -  _3/31/2023, 7:19:34 AM_
 - [1.1.0.md](#1676888737266)  -  _2/20/2023, 10:25:37 AM_
 - [1.0.0.md](#1676439174807)  -  _2/15/2023, 5:32:54 AM_
 - [1.0.0-alpha.1.md](#1676432367640)  -  _2/15/2023, 3:39:27 AM_
@@ -10,6 +11,13 @@
 
 ## Details
 
+<a id="1680247174205"></a>
+### 1.1.1
+
+* feat: expose bot in sending method (fff188e)
+* fix: Update input type in telegram listener (c5ab193)
+* build: update dev env (73dbd38)
+  
 <a id="1676888737266"></a>
 ### 1.1.0
 
