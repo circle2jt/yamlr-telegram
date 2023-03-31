@@ -6,13 +6,14 @@ import { Bot } from './bot'
 import { SendProps } from './send.props'
 
 export abstract class SendAbstract implements Element {
-  ignoreEvalProps = ['telegraf']
+  ignoreEvalProps = ['telegraf', 'bot']
   proxy!: ElementProxy<this>
   protected get logger() {
     return this.proxy.logger
   }
 
-  private telegraf?: Telegraf
+  protected telegraf?: Telegraf
+  protected bot?: Bot
 
   token?: string
   chatIDs!: Array<string | number>
@@ -31,9 +32,10 @@ export abstract class SendAbstract implements Element {
     assert(this.chatIDs.length > 0)
     let telegraf: Telegraf | undefined
     if (this.token) {
-      telegraf = new Telegraf(this.token)
+      telegraf = this.telegraf = new Telegraf(this.token)
     } else {
-      telegraf = this.proxy.getParentByClassName<Bot>(Bot)?.element?.telegraf
+      this.bot = this.proxy.getParentByClassName<Bot>(Bot)?.element
+      telegraf = this.bot?.telegraf
       assert(telegraf, 'Could found "ymlr-telegram" or "token"')
     }
     const opts: any = {
