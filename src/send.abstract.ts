@@ -12,8 +12,7 @@ export abstract class SendAbstract implements Element {
     return this.proxy.logger
   }
 
-  protected telegraf?: Telegraf
-  protected bot?: Bot
+  telegraf?: Telegraf
 
   token?: string
   chatIDs!: Array<string | number>
@@ -30,28 +29,23 @@ export abstract class SendAbstract implements Element {
 
   async exec() {
     assert(this.chatIDs.length > 0)
-    let telegraf: Telegraf | undefined
     if (this.token) {
-      telegraf = this.telegraf = new Telegraf(this.token)
+      this.telegraf = new Telegraf(this.token)
     } else {
-      this.bot = this.proxy.getParentByClassName<Bot>(Bot)?.element
-      telegraf = this.bot?.telegraf
-      assert(telegraf, 'Could found "ymlr-telegram" or "token"')
+      this.telegraf = this.proxy.getParentByClassName<Bot>(Bot)?.element?.telegraf
     }
+    assert(this.telegraf, 'Could found "ymlr-telegram" or "token"')
     const opts: any = {
       parse_mode: this.type,
       disable_notification: !!this.notify,
       reply_to_message_id: this.replyMessageID,
       ...(this.opts || {})
     }
-    const rs = await this.send(telegraf, opts)
+    const rs = await this.send(this.telegraf, opts)
     return rs
   }
 
   abstract send(bot: Telegraf, opts: any): any
 
-  async dispose() {
-    this.telegraf?.stop()
-    this.telegraf = undefined
-  }
+  dispose() { }
 }
