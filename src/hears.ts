@@ -21,7 +21,7 @@ import { HearsProps } from './hears.props'
   ```
 */
 export class Hears extends Job {
-  text?: string
+  text?: string | string[] | RegExp | RegExp[]
   token?: string
 
   bot?: Bot

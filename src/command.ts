@@ -21,7 +21,7 @@ import { CommandProps } from './command.props'
   ```
 */
 export class Command extends Job {
-  name?: string
+  name?: string | string[]
   token?: string
 
   bot?: Bot

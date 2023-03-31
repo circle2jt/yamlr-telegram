@@ -21,7 +21,7 @@ import { OnProps } from './on.props'
   ```
 */
 export class On extends Job {
-  filter?: string
+  filter?: string | string[] | RegExp | RegExp[]
   token?: string
 
   bot?: Bot

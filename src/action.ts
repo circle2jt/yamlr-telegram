@@ -35,7 +35,7 @@ import { Bot } from './bot'
   ```
 */
 export class Action extends Job {
-  name?: string
+  name?: string | string[] | RegExp | RegExp[]
   token?: string
 
   bot?: Bot
