@@ -8,4 +8,5 @@ export const send = () => require('./send-text').SendText
 export const sendPhoto = () => require('./send-photo').SendPhoto
 export const sendDocument = () => require('./send-document').SendDocument
 export const sendSticker = () => require('./send-sticker').SendSticker
+export const sendMediaGroup = () => require('./send-media-group').SendMediaGroup
 export default bot

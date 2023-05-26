@@ -22,6 +22,7 @@ Support telegram API via `telegraf` librarry
 | [ymlr-telegram'on](#ymlr-telegram'on) | Listen events directly from telegram. Example: "sticker", "text"... |
 | [ymlr-telegram'send](#ymlr-telegram'send) | Send/Edit/Reply a message in telegram |
 | [ymlr-telegram'sendDocument](#ymlr-telegram'sendDocument) | Send a document file in telegram |
+| [ymlr-telegram'sendMediaGroup](#ymlr-telegram'sendMediaGroup) | Send a photo in telegram |
 | [ymlr-telegram'sendPhoto](#ymlr-telegram'sendPhoto) | Send a photo in telegram |
 | [ymlr-telegram'sendSticker](#ymlr-telegram'sendSticker) | Send a photo in telegram |
 | [ymlr-telegram'stop](#ymlr-telegram'stop) | Stop telegram bot |
@@ -246,6 +247,42 @@ Reuse bot in the ymlr-telegram
             chatID: ${TELEGRAM_CHAT_ID}
             file: http://.../README.md          # "file" is a path of local file or a URL
             caption: This is a image caption    # File caption
+```  
+
+
+## <a id="ymlr-telegram'sendMediaGroup"></a>ymlr-telegram'sendMediaGroup  
+  
+Send a photo in telegram  
+
+Example:  
+
+```yaml
+  - ymlr-telegram'sendMediaGroup:
+      token: ${BOT_TOKEN}
+      chatID: ${TELEGRAM_CHAT_ID}
+      # chatIDs:
+      #  - ${TELEGRAM_CHAT_ID_1}
+      #  - ${TELEGRAM_CHAT_ID_2}
+      data:
+        - media: http://.../image1.jpg               # "file" is a path of local file or a URL
+          caption: This is a image caption           # File caption
+          type: photo                                # File type must in [ photo, document, audio, video ]
+        - media: http://.../image2.jpg
+          caption: This is a image caption
+          type: photo
+```
+
+Reuse bot in the ymlr-telegram
+```yaml
+  - ymlr-telegram:
+      token: ${BOT_TOKEN}
+      runs:
+        - ymlr-telegram'sendMediaGroup:
+            chatID: ${TELEGRAM_CHAT_ID}
+            data:
+              - media: http://.../image.jpg                # "file" is a path of local file or a URL
+                caption: This is a image caption           # File caption
+                type: photo                                # File type must in [ photo, document, audio, video ]
 ```  
 
 
