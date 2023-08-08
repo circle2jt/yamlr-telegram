@@ -15,6 +15,7 @@ export abstract class SendAbstract implements Element {
   telegraf?: Telegraf
 
   token?: string
+  chatID?: string
   chatIDs!: Array<string | number>
   notify?: boolean
   replyMessageID?: number
@@ -22,13 +23,18 @@ export abstract class SendAbstract implements Element {
 
   type?: 'Markdown' | 'HTML'
 
-  constructor({ chatID, chatIDs = [], ...props }: SendProps) {
-    chatID && chatIDs.push(chatID)
-    Object.assign(this, { chatIDs, ...props })
+  constructor(props: SendProps) {
+    Object.assign(this, props)
   }
 
   async exec() {
-    assert(this.chatIDs.length > 0)
+    if (this.chatID) {
+      if (!this.chatIDs) {
+        this.chatIDs = []
+      }
+      this.chatIDs.push(this.chatID)
+    }
+    assert(this.chatIDs?.length)
     if (this.token) {
       this.telegraf = new Telegraf(this.token)
     } else {
