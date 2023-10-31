@@ -1,6 +1,6 @@
-import { Telegraf } from 'telegraf'
-import { ExtraDocument } from 'telegraf/typings/telegram-types'
-import { SendDocumentProps } from './send-document.props'
+import { type Telegraf } from 'telegraf'
+import { type ExtraDocument } from 'telegraf/typings/telegram-types'
+import { type SendDocumentProps } from './send-document.props'
 import { SendPhoto } from './send-photo'
 
 /** |**  ymlr-telegram'sendDocument

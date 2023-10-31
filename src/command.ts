@@ -1,7 +1,7 @@
 import assert from 'assert'
-import { Job } from 'ymlr/src/components/.job/job'
-import { Bot } from './bot'
-import { CommandProps } from './command.props'
+import { type Bot } from './bot'
+import { type CommandProps } from './command.props'
+import { Handler } from './handler.abstract'
 
 /** |**  ymlr-telegram'command
   Handle command in chat. Example: "/start", "/custom" ...
@@ -18,40 +18,26 @@ import { CommandProps } from './command.props'
           - echo: ${ $vars.message }
           - exec'js: |
               $parentState.botCtx.reply('This is custom command')
+
+          - stop:                         # Stop bot here
   ```
 */
-export class Command extends Job {
+export class Command extends Handler {
   name?: string | string[]
-  token?: string
 
-  bot?: Bot
-
-  constructor({ name, token, ...props }: CommandProps) {
-    super(props as any)
-    Object.assign(this, { name, token })
-    this.ignoreEvalProps.push('bot')
+  constructor(props: CommandProps) {
+    super(props)
+    Object.assign(this, props)
   }
 
-  async execJob() {
+  async handle(bot: Bot, parentState?: any) {
     assert(this.name, '"name" is required')
-    let bot: Bot | undefined
-    if (this.token) {
-      bot = this.bot = new Bot({
-        token: this.token
-      })
-    } else {
-      bot = this.proxy.getParentByClassName<Bot>(Bot)?.element
-    }
-    assert(bot)
-    bot.telegraf.command(this.name, async ctx => {
+    bot.telegraf?.command(this.name, async ctx => {
       this.logger.debug(`⇠┆${this.name}┆⇠ \t%j`, ctx.message)
-      await this.addJobData({ botCtx: ctx })
+      await this.innerRunsProxy.exec({
+        ...parentState,
+        botCtx: ctx
+      })
     })
-    await this.bot?.exec()
-  }
-
-  async stop() {
-    this.bot?.telegraf.stop()
-    await super.stop()
   }
 }

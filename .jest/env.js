@@ -1,2 +1,3 @@
 process.env.NODE_ENV = 'test'
-process.env.TOKEN = '5803516738:AAEw3IBgzhbEqVnkVNEZglRqaXhyfZ68y3w'
+process.env.DEBUG_GROUP_RESULT = 'true'
+process.env.TOKEN = ''

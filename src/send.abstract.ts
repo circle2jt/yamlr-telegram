@@ -1,9 +1,9 @@
 import assert from 'assert'
 import { Telegraf } from 'telegraf'
-import { ElementProxy } from 'ymlr/src/components/element-proxy'
-import { Element } from 'ymlr/src/components/element.interface'
+import { type ElementProxy } from 'ymlr/src/components/element-proxy'
+import { type Element } from 'ymlr/src/components/element.interface'
 import { Bot } from './bot'
-import { SendProps } from './send.props'
+import { type SendProps } from './send.props'
 
 export abstract class SendAbstract implements Element {
   ignoreEvalProps = ['telegraf', 'bot']

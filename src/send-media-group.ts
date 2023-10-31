@@ -1,8 +1,8 @@
 import assert from 'assert'
-import { Telegraf } from 'telegraf'
-import { ExtraPhoto } from 'telegraf/typings/telegram-types'
+import { type Telegraf } from 'telegraf'
+import { type ExtraPhoto } from 'telegraf/typings/telegram-types'
 import { FileRemote } from 'ymlr/src/libs/file-remote'
-import { SendMediaGroupProps } from './send-media-group.props'
+import { type SendMediaGroupProps } from './send-media-group.props'
 import { SendAbstract } from './send.abstract'
 
 /** |**  ymlr-telegram'sendMediaGroup

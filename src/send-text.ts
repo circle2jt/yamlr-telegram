@@ -1,6 +1,6 @@
-import { Telegraf } from 'telegraf'
-import { ExtraEditMessageText } from 'telegraf/typings/telegram-types'
-import { SendTextProps } from './send-text.props'
+import { type Telegraf } from 'telegraf'
+import { type ExtraEditMessageText } from 'telegraf/typings/telegram-types'
+import { type SendTextProps } from './send-text.props'
 import { SendAbstract } from './send.abstract'
 
 /** |**  ymlr-telegram'send

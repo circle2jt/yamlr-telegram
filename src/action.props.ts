@@ -1,6 +1,4 @@
-import { GroupProps } from 'ymlr/src/components/group/group.props'
-
-export type ActionProps = {
+export interface ActionProps {
   name?: string | string[] | RegExp | RegExp[]
   token?: string
-} & GroupProps
+}

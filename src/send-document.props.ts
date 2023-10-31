@@ -1,3 +1,3 @@
-import { SendPhotoProps } from './send-photo.props'
+import { type SendPhotoProps } from './send-photo.props'
 
 export type SendDocumentProps = SendPhotoProps

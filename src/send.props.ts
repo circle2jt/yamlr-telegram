@@ -1,4 +1,3 @@
-
 export interface SendProps {
   token?: string
   chatID?: string

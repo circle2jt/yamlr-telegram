@@ -1,7 +1,7 @@
 import assert from 'assert'
-import { Job } from 'ymlr/src/components/.job/job'
-import { Bot } from './bot'
-import { OnProps } from './on.props'
+import { type Bot } from './bot'
+import { Handler } from './handler.abstract'
+import { type OnProps } from './on.props'
 
 /** |**  ymlr-telegram'on
   Listen events directly from telegram. Example: "sticker", "text"...
@@ -18,40 +18,27 @@ import { OnProps } from './on.props'
           - echo: ${ $vars.message }
           - exec'js: |
               $parentState.botCtx.reply('Hi there')
+
+          - stop:                         # Stop bot here
   ```
 */
-export class On extends Job {
+export class On extends Handler {
   filter?: string | string[] | RegExp | RegExp[]
-  token?: string
 
-  bot?: Bot
-
-  constructor({ filter, token, ...props }: OnProps) {
-    super(props as any)
-    Object.assign(this, { filter, token })
-    this.ignoreEvalProps.push('bot')
+  constructor(props: OnProps) {
+    super(props)
+    Object.assign(this, props)
   }
 
-  async execJob() {
+  async handle(bot: Bot, parentState?: any) {
     assert(this.filter, '"filter" is required')
-    let bot: Bot | undefined
-    if (this.token) {
-      bot = this.bot = new Bot({
-        token: this.token
-      })
-    } else {
-      bot = this.proxy.getParentByClassName<Bot>(Bot)?.element
-    }
-    assert(bot)
-    bot.telegraf.on(this.filter as any, async ctx => {
+    bot.telegraf?.on(this.filter as any, async ctx => {
       this.logger.trace(`⇠┆${this.filter}┆⇠ \t%j`, ctx.message)
-      await this.addJobData({ botCtx: ctx })
+      await this.innerRunsProxy.exec({
+        ...parentState,
+        botCtx: ctx
+      })
     })
     await this.bot?.exec()
-  }
-
-  async stop() {
-    this.bot?.telegraf.stop()
-    await super.stop()
   }
 }

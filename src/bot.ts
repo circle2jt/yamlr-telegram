@@ -1,11 +1,11 @@
 import assert from 'assert'
 import { Telegraf } from 'telegraf'
-import { ElementProxy } from 'ymlr/src/components/element-proxy'
-import { Element } from 'ymlr/src/components/element.interface'
-import { Group } from 'ymlr/src/components/group/group'
-import { GroupItemProps, GroupProps } from 'ymlr/src/components/group/group.props'
+import { type ElementProxy } from 'ymlr/src/components/element-proxy'
+import { type Element } from 'ymlr/src/components/element.interface'
+import { type Group } from 'ymlr/src/components/group/group'
+import { type GroupItemProps, type GroupProps } from 'ymlr/src/components/group/group.props'
 import { sleep } from 'ymlr/src/libs/time'
-import { BotProps } from './bot.props'
+import { type BotProps } from './bot.props'
 
 /** |**  ymlr-telegram
   Declare a global telegram bot which is reused in the others
@@ -35,24 +35,28 @@ import { BotProps } from './bot.props'
                 - echo: ${ $parentState.botCtx.message.text }
   ```
 */
-export class Bot extends Group<GroupProps, GroupItemProps> {
-  private _telegraf?: Telegraf
-  get telegraf() {
-    return this._telegraf || (this._telegraf = new Telegraf(this.token))
-  }
-
+export class Bot implements Element {
+  readonly proxy!: ElementProxy<this>
+  readonly innerRunsProxy!: ElementProxy<Group<GroupProps, GroupItemProps>>
+  readonly ignoreEvalProps = ['telegraf']
   token: string = ''
 
-  constructor({ token, ...props }: BotProps) {
-    super(props)
-    Object.assign(this, { token })
-    this.ignoreEvalProps.push('telegraf', '_telegraf')
+  telegraf?: Telegraf
+
+  get logger() {
+    return this.proxy.logger
   }
 
-  async exec(input?: any) {
+  constructor(props: BotProps) {
+    Object.assign(this, props)
+  }
+
+  async exec(parentState?: any) {
     assert(this.token, '"token" is required')
+    this.telegraf = new Telegraf(this.token)
+
     const proms = []
-    proms.push(super.exec(input))
+    proms.push(this.innerRunsProxy.exec(parentState))
     await sleep(200)
     proms.push(this.telegraf.launch())
     while (!this.telegraf.botInfo) {
@@ -62,14 +66,12 @@ export class Bot extends Group<GroupProps, GroupItemProps> {
     return rs as Array<ElementProxy<Element>>
   }
 
-  async stop() {
-    if (!this._telegraf) return
-    this.telegraf.stop('SIGINT')
-    this._telegraf = undefined
+  stop() {
+    this.telegraf?.stop('SIGINT')
+    this.telegraf = undefined
   }
 
-  async dispose() {
-    await this.stop()
-    await super.dispose()
+  dispose() {
+    this.stop()
   }
 }

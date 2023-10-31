@@ -108,3 +108,4 @@ dist
 
 test-local/
 *.tmp.yaml
+dev.env.*

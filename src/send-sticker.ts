@@ -1,9 +1,9 @@
 import assert from 'assert'
-import { Telegraf } from 'telegraf'
-import { InputFile } from 'telegraf/typings/core/types/typegram'
-import { ExtraSticker } from 'telegraf/typings/telegram-types'
+import { type Telegraf } from 'telegraf'
+import { type InputFile } from 'telegraf/typings/core/types/typegram'
+import { type ExtraSticker } from 'telegraf/typings/telegram-types'
 import { FileRemote } from 'ymlr/src/libs/file-remote'
-import { SendStickerProps } from './send-sticker.props'
+import { type SendStickerProps } from './send-sticker.props'
 import { SendAbstract } from './send.abstract'
 
 /** |**  ymlr-telegram'sendSticker
