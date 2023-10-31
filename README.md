@@ -25,7 +25,6 @@ Support telegram API via `telegraf` librarry
 | [ymlr-telegram'sendMediaGroup](#ymlr-telegram'sendMediaGroup) | Send a photo in telegram |
 | [ymlr-telegram'sendPhoto](#ymlr-telegram'sendPhoto) | Send a photo in telegram |
 | [ymlr-telegram'sendSticker](#ymlr-telegram'sendSticker) | Send a photo in telegram |
-| [ymlr-telegram'stop](#ymlr-telegram'stop) | Stop telegram bot |
 
 
 
@@ -80,6 +79,8 @@ Example:
         - exec'js: |
             $parentState.botCtx.reply('Picked ' + $vars.callbackData)
 
+        - stop:                         # Stop bot here
+
   - ymlr-telegram'send:
       token: ${BOT_TOKEN}
       chatID: ${CHAT_ID}
@@ -114,6 +115,8 @@ Example:
         - echo: ${ $vars.message }
         - exec'js: |
             $parentState.botCtx.reply('This is custom command')
+
+        - stop:                         # Stop bot here
 ```  
 
 
@@ -135,6 +138,8 @@ Example:
         - echo: ${ $vars.message }
         - exec'js: |
             $parentState.botCtx.reply('Hi there')
+
+        - stop:                         # Stop bot here
 ```  
 
 
@@ -156,6 +161,8 @@ Example:
         - echo: ${ $vars.message }
         - exec'js: |
             $parentState.botCtx.reply('Hi there')
+
+        - stop:                         # Stop bot here
 ```  
 
 
@@ -341,26 +348,6 @@ Reuse bot in the ymlr-telegram
             chatID: ${TELEGRAM_CHAT_ID}
             sticker: /tmp/image.jpg             # "file" is a character, path of local file or a URL
             caption: This is a image caption    # File caption
-```  
-
-
-## <a id="ymlr-telegram'stop"></a>ymlr-telegram'stop  
-  
-Stop telegram bot  
-
-Example:  
-
-```yaml
-  - ymlr-telegram:
-      token: ${BOT_TOKEN}
-      runs:
-        - name: Send a hi message
-          ymlr-telegram'send:
-            chatID: ${TELEGRAM_CHAT_ID}
-            text: Hi there
-
-        - ymlr-telegram'stop:            # Stop bot here
-  - echo: Keep doing something after the bot is stoped here
 ```  
 
 
