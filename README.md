@@ -181,6 +181,7 @@ Example:
       #  - ${TELEGRAM_CHAT_ID_2}
       text: Hi there
       opts:
+        parse_mode: MarkdownV2  # Send text with markdown format
         reply_markup:
           inline_keyboard:
             - - text: Button 1
