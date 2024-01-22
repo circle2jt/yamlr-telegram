@@ -2858,6 +2858,11 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
+lodash.debounce@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+  integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
+
 lodash.memoize@4.x:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -2867,6 +2872,11 @@ lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
+
+lodash.throttle@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+  integrity sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==
 
 lodash.toplainobject@^4.2.0:
   version "4.2.0"
@@ -3943,17 +3953,19 @@ yargs@^17.3.1:
     y18n "^5.0.5"
     yargs-parser "^21.1.1"
 
-ymlr@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/ymlr/-/ymlr-1.2.3.tgz#d5dfb1fea49b6ec7b5bb1c7c8516bfa14c39d010"
-  integrity sha512-yMox7WRnz2zmxoZEBA/3ORUXGQ2H7ilsK+mT+JcKOIaFaF5NrzUBmBI7hOatK1EN5DOybsS3bwqW/ZOIyn8GEw==
+ymlr@^1.2.6-alpha.29:
+  version "1.2.6-alpha.29"
+  resolved "https://registry.yarnpkg.com/ymlr/-/ymlr-1.2.6-alpha.29.tgz#ba6ba5418d8dcfde4d035f5b67e65a18970313d6"
+  integrity sha512-lCcO5r3uvEcldDCxP7fmG+dFeIOEB4M5A5iDEd0g/vVo1QEOeaSJG1yevEzdq6N31GAMJR389cNpd99bPL6Ngg==
   dependencies:
     axios "^1.3.4"
     chalk "^4.1.2"
     commander "^9.4.1"
     form-data "^4.0.0"
     js-yaml "^4.1.0"
+    lodash.debounce "^4.0.8"
     lodash.merge "^4.6.2"
+    lodash.throttle "^4.1.1"
     lodash.toplainobject "^4.2.0"
     prompts "^2.4.2"
     xml2js "^0.5.0"

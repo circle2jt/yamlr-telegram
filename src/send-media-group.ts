@@ -42,6 +42,8 @@ export class SendMediaGroup extends SendAbstract {
     type: 'photo' | 'audio' | 'document' | 'video'
     media: string
     caption?: string
+    title?: string
+    filename?: string
   }>
 
   constructor({ data, ...props }: SendMediaGroupProps) {
@@ -59,10 +61,17 @@ export class SendMediaGroup extends SendAbstract {
     this.logger.debug(`⇢┆${this.chatIDs}┆⇢ \t%j`, this.data)
     const data = this.data.map(item => {
       const fileRemote = new FileRemote(item.media, this.proxy.scene)
-      return {
-        ...item,
-        media: fileRemote.uri
+      const { filename, ...data } = item as any
+      data.media = {}
+      if (filename) {
+        data.media.filename = filename
       }
+      if (fileRemote.isRemote) {
+        data.media.url = fileRemote.uri
+      } else {
+        data.media.source = fileRemote.uri
+      }
+      return data
     }) as any
     const rs = await Promise.all(this.chatIDs.map(async chatID => await bot.telegram.sendMediaGroup(chatID, data, {
       ...opts
