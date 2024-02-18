@@ -21,6 +21,8 @@ Support telegram API via `telegraf` librarry
 | [ymlr-telegram'hears](#ymlr-telegram'hears) | It's trigged when text in the chat is matched in the "text" property |
 | [ymlr-telegram'on](#ymlr-telegram'on) | Listen events directly from telegram. Example: "sticker", "text"... |
 | [ymlr-telegram'send](#ymlr-telegram'send) | Send/Edit/Reply a message in telegram |
+| [ymlr-telegram'send](#ymlr-telegram'send) | Send/Edit/Reply a message in telegram |
+| [ymlr-telegram'send](#ymlr-telegram'send) | Send/Edit/Reply a message in telegram |
 | [ymlr-telegram'sendDocument](#ymlr-telegram'sendDocument) | Send a document file in telegram |
 | [ymlr-telegram'sendMediaGroup](#ymlr-telegram'sendMediaGroup) | Send a photo in telegram |
 | [ymlr-telegram'sendPhoto](#ymlr-telegram'sendPhoto) | Send a photo in telegram |
@@ -173,6 +175,20 @@ Send/Edit/Reply a message in telegram
 Example:  
 
 ```yaml
+  - ymlr-telegram'pin:
+      token: ${BOT_TOKEN}
+      chatID: ${TELEGRAM_CHAT_ID}
+      messageID: ${ $vars.messageID }
+```  
+
+
+## <a id="ymlr-telegram'send"></a>ymlr-telegram'send  
+  
+Send/Edit/Reply a message in telegram  
+
+Example:  
+
+```yaml
   - ymlr-telegram'send:
       token: ${BOT_TOKEN}
       chatID: ${TELEGRAM_CHAT_ID}
@@ -226,6 +242,20 @@ Reply a message
       replyMessageID: ${ $vars.messageID }       # Message ID to reply
       chatID: ${TELEGRAM_CHAT_ID}
       text: Hi again
+```  
+
+
+## <a id="ymlr-telegram'send"></a>ymlr-telegram'send  
+  
+Send/Edit/Reply a message in telegram  
+
+Example:  
+
+```yaml
+  - ymlr-telegram'unpin:
+      token: ${BOT_TOKEN}
+      chatID: ${TELEGRAM_CHAT_ID}
+      messageID: ${ $vars.messageID } # message is not specific then unpin all message in the chat
 ```  
 
 
