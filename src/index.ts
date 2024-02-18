@@ -4,6 +4,8 @@ export const action = () => require('./action').Action
 export const command = () => require('./command').Command
 export const hears = () => require('./hears').Hears
 export const on = () => require('./on').On
+export const pin = () => require('./pin').Pin
+export const unpin = () => require('./unpin').UnPin
 export const send = () => require('./send-text').SendText
 export const sendPhoto = () => require('./send-photo').SendPhoto
 export const sendDocument = () => require('./send-document').SendDocument
