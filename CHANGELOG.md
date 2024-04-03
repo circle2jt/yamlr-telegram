@@ -2,6 +2,7 @@
 
 ## History
 
+- [1.2.3.md](#1712113111748)  -  _4/3/2024, 9:58:31 AM_
 - [1.2.3-alpha.0.md](#1708244133476)  -  _2/18/2024, 3:15:33 PM_
 - [1.2.2.md](#1705916741198)  -  _1/22/2024, 4:45:41 PM_
 - [1.2.1.md](#1698744675112)  -  _10/31/2023, 4:31:15 PM_
@@ -17,6 +18,13 @@
 
 ## Details
 
+<a id="1712113111748"></a>
+### 1.2.3
+
+* fix: send photo, media with buffer and readable stream (5d54a37)
+* chore: prerelease 1.2.3-alpha.0 (51e1798)
+* feat: add pin/unpin tags (ffcceb7)
+  
 <a id="1708244133476"></a>
 ### 1.2.3-alpha.0
 
