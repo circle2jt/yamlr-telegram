@@ -40,7 +40,7 @@ import { SendAbstract } from './send.abstract'
 export class SendMediaGroup extends SendAbstract {
   data = [] as Array<{
     type: 'photo' | 'audio' | 'document' | 'video'
-    media: string
+    media: string | Buffer
     caption?: string
     title?: string
     filename?: string
@@ -60,18 +60,16 @@ export class SendMediaGroup extends SendAbstract {
   async send(bot: Telegraf, opts: ExtraPhoto) {
     this.logger.debug(`⇢┆${this.chatIDs}┆⇢ \t%j`, this.data)
     const data = this.data.map(item => {
-      const fileRemote = new FileRemote(item.media, this.proxy.scene)
-      const { filename, ...data } = item as any
-      data.media = {}
-      if (filename) {
-        data.media.filename = filename
-      }
-      if (fileRemote.isRemote) {
-        data.media.url = fileRemote.uri
+      const { media, ...itemData } = item as any
+      if (media instanceof Buffer) {
+        itemData.media = { source: media }
+      } else if (media instanceof ReadableStream) {
+        itemData.media = { source: media }
       } else {
-        data.media.source = fileRemote.uri
+        const fileRemote = new FileRemote(media, this.proxy.scene)
+        itemData.media = fileRemote.isRemote ? { url: fileRemote.uri } : { source: fileRemote.uri }
       }
-      return data
+      return itemData
     }) as any
     const rs = await Promise.all(this.chatIDs.map(async chatID => await bot.telegram.sendMediaGroup(chatID, data, {
       ...opts

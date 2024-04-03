@@ -1,6 +1,5 @@
 import assert from 'assert'
 import { type Telegraf } from 'telegraf'
-import { type InputFile } from 'telegraf/typings/core/types/typegram'
 import { type ExtraPhoto } from 'telegraf/typings/telegram-types'
 import { FileRemote } from 'ymlr/src/libs/file-remote'
 import { type SendPhotoProps } from './send-photo.props'
@@ -32,14 +31,20 @@ import { SendAbstract } from './send.abstract'
   ```
 */
 export class SendPhoto extends SendAbstract {
-  file: string = ''
+  file: string | Buffer | ReadableStream = ''
   caption?: string
 
-  protected get source() {
+  protected get source(): any {
     assert(this.file, '"file" is required')
-    const fileRemote = new FileRemote(this.file, this.proxy.scene)
-    const file = fileRemote.isRemote ? { url: fileRemote.uri } : { source: fileRemote.uri }
-    return file as InputFile
+    const media = this.file
+    if (media instanceof Buffer) {
+      return { source: media }
+    }
+    if (media instanceof ReadableStream) {
+      return { source: media }
+    }
+    const fileRemote = new FileRemote(media, this.proxy.scene)
+    return fileRemote.isRemote ? { url: fileRemote.uri } : { source: fileRemote.uri }
   }
 
   constructor({ file, caption, ...props }: SendPhotoProps) {
