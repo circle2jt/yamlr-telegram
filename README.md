@@ -189,6 +189,20 @@ Send/Edit/Reply a message in telegram
 Example:  
 
 ```yaml
+  - ymlr-telegram'unpin:
+      token: ${BOT_TOKEN}
+      chatID: ${TELEGRAM_CHAT_ID}
+      messageID: ${ $vars.messageID } # message is not specific then unpin all message in the chat
+```  
+
+
+## <a id="ymlr-telegram'send"></a>ymlr-telegram'send  
+  
+Send/Edit/Reply a message in telegram  
+
+Example:  
+
+```yaml
   - ymlr-telegram'send:
       token: ${BOT_TOKEN}
       chatID: ${TELEGRAM_CHAT_ID}
@@ -242,20 +256,6 @@ Reply a message
       replyMessageID: ${ $vars.messageID }       # Message ID to reply
       chatID: ${TELEGRAM_CHAT_ID}
       text: Hi again
-```  
-
-
-## <a id="ymlr-telegram'send"></a>ymlr-telegram'send  
-  
-Send/Edit/Reply a message in telegram  
-
-Example:  
-
-```yaml
-  - ymlr-telegram'unpin:
-      token: ${BOT_TOKEN}
-      chatID: ${TELEGRAM_CHAT_ID}
-      messageID: ${ $vars.messageID } # message is not specific then unpin all message in the chat
 ```  
 
 
