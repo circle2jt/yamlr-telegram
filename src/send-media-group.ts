@@ -71,9 +71,13 @@ export class SendMediaGroup extends SendAbstract {
       }
       return itemData
     }) as any
-    const rs = await Promise.all(this.chatIDs.map(async chatID => await bot.telegram.sendMediaGroup(chatID, data, {
-      ...opts
-    })))
+    const rs = await Promise.all(this.chatIDs.map(async chatID => {
+      const rs = await bot.telegram.sendMediaGroup(chatID, data, {
+        ...opts
+      })
+      await Promise.all(rs.map(async media => { await this.autoPin(bot, chatID, media.message_id) }))
+      return rs
+    }))
     return rs as any
   }
 }

@@ -36,10 +36,14 @@ export class SendDocument extends SendPhoto {
   async send(bot: Telegraf, opts: ExtraDocument) {
     this.logger.debug(`⇢┆${this.chatIDs}┆⇢ \t%s`, this.file)
 
-    const rs = await Promise.all(this.chatIDs.map(async chatID => await bot.telegram.sendDocument(chatID, this.source, {
-      caption: this.caption,
-      ...opts
-    })))
+    const rs = await Promise.all(this.chatIDs.map(async chatID => {
+      const rs = await bot.telegram.sendDocument(chatID, this.source, {
+        caption: this.caption,
+        ...opts
+      })
+      await this.autoPin(bot, chatID, rs.message_id)
+      return rs
+    }))
     return rs as any
   }
 }

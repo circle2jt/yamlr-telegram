@@ -12,10 +12,12 @@ export abstract class SendAbstract implements Element {
     return this.proxy.logger
   }
 
+  pin?: boolean
+
   telegraf?: Telegraf
 
   token?: string
-  chatID?: string
+  chatID?: string | number
   chatIDs!: Array<string | number>
   notify?: boolean
   replyMessageID?: number
@@ -51,6 +53,11 @@ export abstract class SendAbstract implements Element {
     return rs
   }
 
+  async autoPin(bot: Telegraf, chatID: string | number, messageID?: number) {
+    if (this.pin && messageID !== undefined) {
+      await bot.telegram.pinChatMessage(chatID, messageID, { disable_notification: true })
+    }
+  }
   abstract send(bot: Telegraf, opts: any): any
 
   dispose() { }

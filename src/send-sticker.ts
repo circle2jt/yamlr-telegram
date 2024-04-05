@@ -56,7 +56,11 @@ export class SendSticker extends SendAbstract {
   async send(bot: Telegraf, opts: ExtraSticker) {
     this.logger.debug(`⇢┆${this.chatIDs}┆⇢ \t%s`, this.sticker)
 
-    const rs = await Promise.all(this.chatIDs.map(async chatID => await bot.telegram.sendSticker(chatID, this.source, opts)))
+    const rs = await Promise.all(this.chatIDs.map(async chatID => {
+      const rs = await bot.telegram.sendSticker(chatID, this.source, opts)
+      await this.autoPin(bot, chatID, rs.message_id)
+      return rs
+    }))
     return rs as any
   }
 }

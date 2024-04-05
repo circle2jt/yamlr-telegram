@@ -5,4 +5,5 @@ export interface SendProps {
   replyMessageID?: number
   notify?: boolean
   type?: 'Markdown' | 'HTML'
+  pin?: boolean
 }

@@ -80,9 +80,17 @@ export class SendText extends SendAbstract {
       result.remove = await Promise.all(this.chatIDs.map(async chatID => await bot.telegram.deleteMessage(chatID, this.removeMessageID as number)))
     }
     if (this.editMessageID) {
-      result.edit = await Promise.all(this.chatIDs.map(async chatID => await bot.telegram.editMessageText(chatID, this.editMessageID, undefined, this.text || '', opts)))
+      result.edit = await Promise.all(this.chatIDs.map(async chatID => {
+        const rs = await bot.telegram.editMessageText(chatID, this.editMessageID, undefined, this.text || '', opts)
+        await this.autoPin(bot, chatID, this.editMessageID)
+        return rs
+      }))
     } else if (this.text) {
-      result.send = await Promise.all(this.chatIDs.map(async chatID => await bot.telegram.sendMessage(chatID, this.text || '', opts)))
+      result.send = await Promise.all(this.chatIDs.map(async chatID => {
+        const rs = await bot.telegram.sendMessage(chatID, this.text || '', opts)
+        await this.autoPin(bot, chatID, rs.message_id)
+        return rs
+      }))
     }
     return result
   }

@@ -29,7 +29,7 @@ export class Pin extends UnPin {
   protected override async handle() {
     if (!this.messageID) return
     this.logger.debug(`unpin ${this.chatID}/${this.messageID}`)
-    const rs = await this.telegraf?.telegram.pinChatMessage(this.chatID, this.messageID, this.opts)
+    const rs = await this.telegraf?.telegram.pinChatMessage(this.chatID, this.messageID, { disable_notification: true, ...(this.opts || {}) })
     return rs
   }
 }
