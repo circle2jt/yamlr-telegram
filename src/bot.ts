@@ -56,7 +56,7 @@ export class Bot implements Element {
     this.telegraf = new Telegraf(this.token)
 
     const proms = []
-    proms.push(this.innerRunsProxy.exec(parentState))
+    proms.push(this.innerRunsProxy?.exec(parentState))
     await sleep(200)
     proms.push(this.telegraf.launch())
     while (!this.telegraf.botInfo) {
