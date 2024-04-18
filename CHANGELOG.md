@@ -2,6 +2,7 @@
 
 ## History
 
+- [1.2.4.md](#1713440597299)  -  _4/18/2024, 6:43:17 PM_
 - [1.2.4-alpha.0.md](#1712289077137)  -  _4/5/2024, 10:51:17 AM_
 - [1.2.3.md](#1712113111748)  -  _4/3/2024, 9:58:31 AM_
 - [1.2.3-alpha.0.md](#1708244133476)  -  _2/18/2024, 3:15:33 PM_
@@ -19,6 +20,14 @@
 
 ## Details
 
+<a id="1713440597299"></a>
+### 1.2.4
+
+* fix(sendPhoto,sendMediaGroup): add "filename" property (b4a77a9)
+* fix(action,command,on,hears): bot is not working in some listeners (5412acc)
+* chore: prerelease 1.2.4-alpha.0 (dab7917)
+* feat: allow auto pin when send text, photo... (3973a24)
+  
 <a id="1712289077137"></a>
 ### 1.2.4-alpha.0
 

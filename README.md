@@ -189,20 +189,6 @@ Send/Edit/Reply a message in telegram
 Example:  
 
 ```yaml
-  - ymlr-telegram'unpin:
-      token: ${BOT_TOKEN}
-      chatID: ${TELEGRAM_CHAT_ID}
-      messageID: ${ $vars.messageID } # message is not specific then unpin all message in the chat
-```  
-
-
-## <a id="ymlr-telegram'send"></a>ymlr-telegram'send  
-  
-Send/Edit/Reply a message in telegram  
-
-Example:  
-
-```yaml
   - ymlr-telegram'send:
       token: ${BOT_TOKEN}
       chatID: ${TELEGRAM_CHAT_ID}
@@ -259,6 +245,20 @@ Reply a message
 ```  
 
 
+## <a id="ymlr-telegram'send"></a>ymlr-telegram'send  
+  
+Send/Edit/Reply a message in telegram  
+
+Example:  
+
+```yaml
+  - ymlr-telegram'unpin:
+      token: ${BOT_TOKEN}
+      chatID: ${TELEGRAM_CHAT_ID}
+      messageID: ${ $vars.messageID } # message is not specific then unpin all message in the chat
+```  
+
+
 ## <a id="ymlr-telegram'sendDocument"></a>ymlr-telegram'sendDocument  
   
 Send a document file in telegram  
@@ -305,6 +305,7 @@ Example:
         - media: http://.../image1.jpg               # "file" is a path of local file or a URL
           caption: This is a image caption           # File caption
           type: photo                                # File type must in [ photo, document, audio, video ]
+          filename: image.jpg                        # File name
         - media: http://.../image2.jpg
           caption: This is a image caption
           type: photo
@@ -321,6 +322,7 @@ Reuse bot in the ymlr-telegram
               - media: http://.../image.jpg                # "file" is a path of local file or a URL
                 caption: This is a image caption           # File caption
                 type: photo                                # File type must in [ photo, document, audio, video ]
+                filename: image.jpg                        # File name
 ```  
 
 
@@ -339,6 +341,7 @@ Example:
       #  - ${TELEGRAM_CHAT_ID_2}
       file: http://.../image.jpg                # "file" is a path of local file or a URL
       caption: This is a image caption          # File caption
+      filename: image.jpg                       # File name
 ```
 
 Reuse bot in the ymlr-telegram
@@ -350,6 +353,7 @@ Reuse bot in the ymlr-telegram
             chatID: ${TELEGRAM_CHAT_ID}
             file: /tmp/image.jpg                # "file" is a path of local file or a URL
             caption: This is a image caption    # File caption
+            filename: image.jpg                 # File name
 ```  
 
 
