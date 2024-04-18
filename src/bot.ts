@@ -51,9 +51,13 @@ export class Bot implements Element {
     Object.assign(this, props)
   }
 
+  injectHandle?: (parentState?: any) => any
+
   async exec(parentState?: any) {
     assert(this.token, '"token" is required')
     this.telegraf = new Telegraf(this.token)
+
+    await this.injectHandle?.(parentState)
 
     const proms = []
     proms.push(this.innerRunsProxy?.exec(parentState))

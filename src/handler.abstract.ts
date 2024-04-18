@@ -31,8 +31,10 @@ export abstract class Handler implements Element {
       bot = this.proxy.getParentByClassName<Bot>(Bot)?.element
     }
     assert(bot, '"token" or "bot" is requried')
-    await this.handle(bot, parentState)
-    await bot?.exec()
+    bot.injectHandle = async () => {
+      await this.handle(bot, parentState)
+    }
+    await bot.exec()
   }
 
   abstract handle(bot: Bot, parentState: any): void | Promise<void>
