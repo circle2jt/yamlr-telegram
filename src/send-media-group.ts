@@ -19,6 +19,7 @@ import { SendAbstract } from './send.abstract'
           - media: http://.../image1.jpg               # "file" is a path of local file or a URL
             caption: This is a image caption           # File caption
             type: photo                                # File type must in [ photo, document, audio, video ]
+            filename: image.jpg                        # File name
           - media: http://.../image2.jpg
             caption: This is a image caption
             type: photo
@@ -35,6 +36,7 @@ import { SendAbstract } from './send.abstract'
                 - media: http://.../image.jpg                # "file" is a path of local file or a URL
                   caption: This is a image caption           # File caption
                   type: photo                                # File type must in [ photo, document, audio, video ]
+                  filename: image.jpg                        # File name
   ```
 */
 export class SendMediaGroup extends SendAbstract {
@@ -60,7 +62,7 @@ export class SendMediaGroup extends SendAbstract {
   async send(bot: Telegraf, opts: ExtraPhoto) {
     this.logger.debug(`⇢┆${this.chatIDs}┆⇢ \t%j`, this.data)
     const data = this.data.map(item => {
-      const { media, ...itemData } = item as any
+      const { media, filename, ...itemData } = item as any
       if (media instanceof Buffer) {
         itemData.media = { source: media }
       } else if (media instanceof ReadableStream) {
@@ -68,6 +70,9 @@ export class SendMediaGroup extends SendAbstract {
       } else {
         const fileRemote = new FileRemote(media, this.proxy.scene)
         itemData.media = fileRemote.isRemote ? { url: fileRemote.uri } : { source: fileRemote.uri }
+      }
+      if (filename) {
+        itemData.media.filename = filename
       }
       return itemData
     }) as any

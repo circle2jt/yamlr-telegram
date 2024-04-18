@@ -17,6 +17,7 @@ import { SendAbstract } from './send.abstract'
         #  - ${TELEGRAM_CHAT_ID_2}
         file: http://.../image.jpg                # "file" is a path of local file or a URL
         caption: This is a image caption          # File caption
+        filename: image.jpg                       # File name
   ```
 
   Reuse bot in the ymlr-telegram
@@ -28,23 +29,33 @@ import { SendAbstract } from './send.abstract'
               chatID: ${TELEGRAM_CHAT_ID}
               file: /tmp/image.jpg                # "file" is a path of local file or a URL
               caption: This is a image caption    # File caption
+              filename: image.jpg                 # File name
   ```
 */
 export class SendPhoto extends SendAbstract {
   file: string | Buffer | ReadableStream = ''
   caption?: string
+  filename?: string
 
   protected get source(): any {
     assert(this.file, '"file" is required')
     const media = this.file
-    if (media instanceof Buffer) {
-      return { source: media }
+    const itemData = {} as any
+    if (this.filename) {
+      itemData.filename = this.filename
     }
-    if (media instanceof ReadableStream) {
-      return { source: media }
+    if ((media instanceof Buffer) || (media instanceof ReadableStream)) {
+      itemData.source = media
     }
-    const fileRemote = new FileRemote(media, this.proxy.scene)
-    return fileRemote.isRemote ? { url: fileRemote.uri } : { source: fileRemote.uri }
+    if (!itemData.source) {
+      const fileRemote = new FileRemote(itemData.source, this.proxy.scene)
+      if (fileRemote.isRemote) {
+        itemData.url = fileRemote.uri
+      } else {
+        itemData.source = fileRemote.uri
+      }
+    }
+    return itemData
   }
 
   constructor({ file, caption, ...props }: SendPhotoProps) {

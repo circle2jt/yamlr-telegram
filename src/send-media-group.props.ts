@@ -5,5 +5,6 @@ export type SendMediaGroupProps = {
     media: string
     type: 'photo' | 'audio' | 'document' | 'video'
     caption?: string
+    filename?: string
   }>
 } & SendProps
