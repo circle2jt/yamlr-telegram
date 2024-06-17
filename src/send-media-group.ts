@@ -63,13 +63,13 @@ export class SendMediaGroup extends SendAbstract {
     this.logger.debug(`⇢┆${this.chatIDs}┆⇢ \t%j`, this.data)
     const data = this.data.map(item => {
       const { media, filename, ...itemData } = item as any
-      if (media instanceof Buffer) {
+      if ((media instanceof Buffer) || (media instanceof ReadableStream)) {
         itemData.media = { source: media }
-      } else if (media instanceof ReadableStream) {
-        itemData.media = { source: media }
-      } else {
+      } else if (typeof media === 'string') {
         const fileRemote = new FileRemote(media, this.proxy.scene)
         itemData.media = fileRemote.isRemote ? { url: fileRemote.uri } : { source: fileRemote.uri }
+      } else {
+        throw new Error('"media" is not valid')
       }
       if (filename) {
         itemData.media.filename = filename

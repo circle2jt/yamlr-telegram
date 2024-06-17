@@ -46,21 +46,22 @@ export class SendPhoto extends SendAbstract {
     }
     if ((media instanceof Buffer) || (media instanceof ReadableStream)) {
       itemData.source = media
-    }
-    if (!itemData.source) {
-      const fileRemote = new FileRemote(itemData.source, this.proxy.scene)
+    } else if (typeof media === 'string') {
+      const fileRemote = new FileRemote(media, this.proxy.scene)
       if (fileRemote.isRemote) {
         itemData.url = fileRemote.uri
       } else {
         itemData.source = fileRemote.uri
       }
+    } else {
+      throw new Error('"file" is not valid')
     }
     return itemData
   }
 
-  constructor({ file, caption, ...props }: SendPhotoProps) {
+  constructor({ file, caption, filename, ...props }: SendPhotoProps) {
     super(props as any)
-    Object.assign(this, { file, caption })
+    Object.assign(this, { file, caption, filename })
   }
 
   async send(bot: Telegraf, opts: ExtraPhoto) {
