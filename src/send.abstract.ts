@@ -21,6 +21,7 @@ export abstract class SendAbstract implements Element {
   chatIDs!: Array<string | number>
   notify?: boolean
   replyMessageID?: number
+  removeMessageID?: number
   opts?: any
 
   type?: 'Markdown' | 'HTML'
@@ -49,7 +50,13 @@ export abstract class SendAbstract implements Element {
       reply_to_message_id: this.replyMessageID,
       ...(this.opts || {})
     }
+
     const rs = await this.send(this.telegraf, opts)
+
+    if (this.removeMessageID) {
+      rs.remove = await Promise.all(this.chatIDs.map(async chatID => await this.telegraf?.telegram.deleteMessage(chatID, this.removeMessageID as number)))
+    }
+
     return rs
   }
 

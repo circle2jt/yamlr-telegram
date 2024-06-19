@@ -64,7 +64,6 @@ import { SendAbstract } from './send.abstract'
 */
 export class SendText extends SendAbstract {
   text?: string
-  removeMessageID?: number
   editMessageID?: number
 
   constructor({ text, removeMessageID, editMessageID, ...props }: SendTextProps) {
@@ -76,9 +75,6 @@ export class SendText extends SendAbstract {
     this.logger.debug(`⇢┆${this.chatIDs}┆⇢ \t%s`, this.text)
 
     const result = {} as any
-    if (this.removeMessageID) {
-      result.remove = await Promise.all(this.chatIDs.map(async chatID => await bot.telegram.deleteMessage(chatID, this.removeMessageID as number)))
-    }
     if (this.editMessageID) {
       result.edit = await Promise.all(this.chatIDs.map(async chatID => {
         const rs = await bot.telegram.editMessageText(chatID, this.editMessageID, undefined, this.text || '', opts)
