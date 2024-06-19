@@ -2,6 +2,7 @@
 
 ## History
 
+- [1.2.6-alpha.1.md](#1718788804520)  -  _6/19/2024, 4:20:04 PM_
 - [1.2.6-alpha.0.md](#1718625351724)  -  _6/17/2024, 6:55:51 PM_
 - [1.2.5.md](#1713441980865)  -  _4/18/2024, 7:06:20 PM_
 - [1.2.4.md](#1713440597299)  -  _4/18/2024, 6:43:17 PM_
@@ -22,6 +23,13 @@
 
 ## Details
 
+<a id="1718788804520"></a>
+### 1.2.6-alpha.1
+
+* fix(bot): allow handle without lauch bot (4229ae6)
+* fix: support to remove message in all sender (6070237)
+* infra: update latest ymlr package (1b84541)
+  
 <a id="1718625351724"></a>
 ### 1.2.6-alpha.0
 
