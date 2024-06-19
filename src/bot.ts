@@ -40,6 +40,7 @@ export class Bot implements Element {
   readonly innerRunsProxy!: ElementProxy<Group<GroupProps, GroupItemProps>>
   readonly ignoreEvalProps = ['telegraf']
   token: string = ''
+  launch?: boolean
 
   telegraf?: Telegraf
 
@@ -61,17 +62,22 @@ export class Bot implements Element {
 
     const proms = []
     proms.push(this.innerRunsProxy?.exec(parentState))
-    await sleep(200)
-    proms.push(this.telegraf.launch())
-    while (!this.telegraf.botInfo) {
-      await sleep(100)
+
+    if (this.launch) {
+      await sleep(200)
+      proms.push(this.telegraf.launch())
+      while (!this.telegraf.botInfo) {
+        await sleep(100)
+      }
     }
     const [rs] = await Promise.all(proms)
     return rs as Array<ElementProxy<Element>>
   }
 
   stop() {
-    this.telegraf?.stop('SIGINT')
+    if (this.launch) {
+      this.telegraf?.stop('SIGINT')
+    }
     this.telegraf = undefined
   }
 
