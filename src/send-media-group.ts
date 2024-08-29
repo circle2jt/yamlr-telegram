@@ -37,12 +37,15 @@ import { SendAbstract } from './send.abstract'
                   caption: This is a image caption           # File caption
                   type: photo                                # File type must in [ photo, document, audio, video ]
                   filename: image.jpg                        # File name
+                  mediaOpts:
+                    parse_mode: MarkdownV2
   ```
 */
 export class SendMediaGroup extends SendAbstract {
   data = [] as Array<{
     type: 'photo' | 'audio' | 'document' | 'video'
     media: string | Buffer
+    mediaOpts?: any
     caption?: string
     title?: string
     filename?: string
@@ -62,12 +65,12 @@ export class SendMediaGroup extends SendAbstract {
   async send(bot: Telegraf, opts: ExtraPhoto) {
     this.logger.debug(`⇢┆${this.chatIDs}┆⇢ \t%j`, this.data)
     const data = this.data.map(item => {
-      const { media, filename, ...itemData } = item as any
+      const { media, filename, mediaOpts, ...itemData } = item as any
       if ((media instanceof Buffer) || (media instanceof ReadableStream)) {
-        itemData.media = { source: media }
+        itemData.media = { source: media, ...mediaOpts }
       } else if (typeof media === 'string') {
         const fileRemote = new FileRemote(media, this.proxy.scene)
-        itemData.media = fileRemote.isRemote ? { url: fileRemote.uri } : { source: fileRemote.uri }
+        itemData.media = fileRemote.isRemote ? { url: fileRemote.uri, ...mediaOpts } : { source: fileRemote.uri, ...mediaOpts }
       } else {
         throw new Error('"media" is not valid')
       }
