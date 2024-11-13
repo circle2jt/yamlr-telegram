@@ -37,6 +37,9 @@ export abstract class SendAbstract implements Element {
       }
       this.chatIDs.push(this.chatID)
     }
+    this.chatIDs = this.chatIDs?.filter(c => {
+      return typeof c === 'string' ? c.trim().length : +c
+    })
     assert(this.chatIDs?.length)
     if (this.token) {
       this.telegraf = new Telegraf(this.token)
