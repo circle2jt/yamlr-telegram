@@ -66,7 +66,7 @@ export class SendMediaGroup extends SendAbstract {
       if ((media instanceof Buffer) || (media instanceof ReadableStream)) {
         itemData.media = { source: media }
       } else if (typeof media === 'string') {
-        const fileRemote = new FileRemote(media, this.proxy.scene)
+        const fileRemote = new FileRemote(media, this.proxy)
         itemData.media = fileRemote.isRemote ? { url: fileRemote.uri } : { source: fileRemote.uri }
       } else {
         throw new Error('"media" is not valid')

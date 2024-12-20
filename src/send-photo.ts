@@ -47,7 +47,7 @@ export class SendPhoto extends SendAbstract {
     if ((media instanceof Buffer) || (media instanceof ReadableStream)) {
       itemData.source = media
     } else if (typeof media === 'string') {
-      const fileRemote = new FileRemote(media, this.proxy.scene)
+      const fileRemote = new FileRemote(media, this.proxy)
       if (fileRemote.isRemote) {
         itemData.url = fileRemote.uri
       } else {

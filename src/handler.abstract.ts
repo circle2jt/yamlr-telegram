@@ -1,7 +1,7 @@
 import assert from 'assert'
 import { type ElementProxy } from 'ymlr/src/components/element-proxy'
 import { type Element } from 'ymlr/src/components/element.interface'
-import type Group from 'ymlr/src/components/group'
+import { type Group } from 'ymlr/src/components/group/group'
 import { type GroupItemProps, type GroupProps } from 'ymlr/src/components/group/group.props'
 import { Bot } from './bot'
 

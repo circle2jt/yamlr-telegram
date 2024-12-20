@@ -36,7 +36,7 @@ export class SendSticker extends SendAbstract {
 
   private get source() {
     assert(this.sticker, '"sticker" is required')
-    const fileRemote = new FileRemote(this.sticker, this.proxy.scene)
+    const fileRemote = new FileRemote(this.sticker, this.proxy)
     let file: InputFile | string
     if (fileRemote.isRemote) {
       file = { url: fileRemote.uri }
