@@ -39,26 +39,26 @@ Example:
 ```yaml
   - ymlr-telegram:
       token: ${BOT_TOKEN}
-      runs:
-        - name: Send a hi message
-          ymlr-telegram'send:
-            chatID: ${TELEGRAM_CHAT_ID}
-            # chatIDs:
-            #  - ${TELEGRAM_CHAT_ID_1}
-            #  - ${TELEGRAM_CHAT_ID_2}
-            text: Hi there
+    runs:
+      - name: Send a hi message
+        ymlr-telegram'send:
+          chatID: ${TELEGRAM_CHAT_ID}
+          # chatIDs:
+          #  - ${TELEGRAM_CHAT_ID_1}
+          #  - ${TELEGRAM_CHAT_ID_2}
+          text: Hi there
 
-        - name: Handle custom command
-          ymlr-telegram'command:
-            name: custom           # /custom
-            runs:
-              - echo: ${ $parentState.botCtx.message.text }
+      - name: Handle custom command
+        ymlr-telegram'command:
+          name: custom           # /custom
+        runs:
+          - echo: ${ $parentState.botCtx.message.text }
 
-        - name: Handle when user say hi
-          ymlr-telegram'hears:
-            text: Hi
-            runs:
-              - echo: ${ $parentState.botCtx.message.text }
+      - name: Handle when user say hi
+        ymlr-telegram'hears:
+          text: Hi
+        runs:
+          - echo: ${ $parentState.botCtx.message.text }
 ```  
 
 
@@ -73,15 +73,15 @@ Example:
     ymlr-telegram'action:
       token: ${BOT_TOKEN}
       name: callback
-      runs:
-        # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
-        - vars:
-            callbackData: ${$parentState.botCtx.update.callback_query.data}   # => VN/US
-        - echo: ${ $vars.callbackData }
-        - exec'js: |
-            $parentState.botCtx.reply('Picked ' + $vars.callbackData)
+    runs:
+      # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
+      - vars:
+          callbackData: ${$parentState.botCtx.update.callback_query.data}   # => VN/US
+      - echo: ${ $vars.callbackData }
+      - exec'js: |
+          $parentState.botCtx.reply('Picked ' + $vars.callbackData)
 
-        - stop:                         # Stop bot here
+      - stop:                         # Stop bot here
 
   - ymlr-telegram'send:
       token: ${BOT_TOKEN}
@@ -110,15 +110,15 @@ Example:
     ymlr-telegram'command:
       token: ${BOT_TOKEN}
       name: custom           # /custom
-      runs:
-        # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
-        - vars:
-            message: ${ $parentState.botCtx.message.text }
-        - echo: ${ $vars.message }
-        - exec'js: |
-            $parentState.botCtx.reply('This is custom command')
+    runs:
+      # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
+      - vars:
+          message: ${ $parentState.botCtx.message.text }
+      - echo: ${ $vars.message }
+      - exec'js: |
+          $parentState.botCtx.reply('This is custom command')
 
-        - stop:                         # Stop bot here
+      - stop:                         # Stop bot here
 ```  
 
 
@@ -133,15 +133,15 @@ Example:
     ymlr-telegram'hears:
       token: ${BOT_TOKEN}
       text: Hi
-      runs:
-        # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
-        - vars:
-            message: ${$parentState.botCtx.message.text}
-        - echo: ${ $vars.message }
-        - exec'js: |
-            $parentState.botCtx.reply('Hi there')
+    runs:
+      # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
+      - vars:
+          message: ${$parentState.botCtx.message.text}
+      - echo: ${ $vars.message }
+      - exec'js: |
+          $parentState.botCtx.reply('Hi there')
 
-        - stop:                         # Stop bot here
+      - stop:                         # Stop bot here
 ```  
 
 
@@ -156,15 +156,15 @@ Example:
     ymlr-telegram'on:
       token: ${BOT_TOKEN}
       filter: text
-      runs:
-        # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
-        - vars:
-            message: ${$parentState.botCtx.message.text}
-        - echo: ${ $vars.message }
-        - exec'js: |
-            $parentState.botCtx.reply('Hi there')
+    runs:
+      # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
+      - vars:
+          message: ${$parentState.botCtx.message.text}
+      - echo: ${ $vars.message }
+      - exec'js: |
+          $parentState.botCtx.reply('Hi there')
 
-        - stop:                         # Stop bot here
+      - stop:                         # Stop bot here
 ```  
 
 
@@ -210,12 +210,12 @@ Reuse bot in the ymlr-telegram
 ```yaml
   - ymlr-telegram:
       token: ${BOT_TOKEN}
-      runs:
-        - ymlr-telegram'send:
-            chatID: ${TELEGRAM_CHAT_ID}
-            text: Hi there
-            vars:
-              messageID: ${this.result.message_id}
+    runs:
+      - ymlr-telegram'send:
+          chatID: ${TELEGRAM_CHAT_ID}
+          text: Hi there
+          vars:
+            messageID: ${this.result.message_id}
 ```
 
 Edit a message
@@ -280,11 +280,11 @@ Reuse bot in the ymlr-telegram
 ```yaml
   - ymlr-telegram:
       token: ${BOT_TOKEN}
-      runs:
-        - ymlr-telegram'sendDocument:
-            chatID: ${TELEGRAM_CHAT_ID}
-            file: http://.../README.md          # "file" is a path of local file or a URL
-            caption: This is a image caption    # File caption
+    runs:
+      - ymlr-telegram'sendDocument:
+          chatID: ${TELEGRAM_CHAT_ID}
+          file: http://.../README.md          # "file" is a path of local file or a URL
+          caption: This is a image caption    # File caption
 ```  
 
 
@@ -315,14 +315,14 @@ Reuse bot in the ymlr-telegram
 ```yaml
   - ymlr-telegram:
       token: ${BOT_TOKEN}
-      runs:
-        - ymlr-telegram'sendMediaGroup:
-            chatID: ${TELEGRAM_CHAT_ID}
-            data:
-              - media: http://.../image.jpg                # "file" is a path of local file or a URL
-                caption: This is a image caption           # File caption
-                type: photo                                # File type must in [ photo, document, audio, video ]
-                filename: image.jpg                        # File name
+    runs:
+      - ymlr-telegram'sendMediaGroup:
+          chatID: ${TELEGRAM_CHAT_ID}
+          data:
+            - media: http://.../image.jpg                # "file" is a path of local file or a URL
+              caption: This is a image caption           # File caption
+              type: photo                                # File type must in [ photo, document, audio, video ]
+              filename: image.jpg                        # File name
 ```  
 
 
@@ -348,12 +348,12 @@ Reuse bot in the ymlr-telegram
 ```yaml
   - ymlr-telegram:
       token: ${BOT_TOKEN}
-      runs:
-        - ymlr-telegram'sendPhoto:
-            chatID: ${TELEGRAM_CHAT_ID}
-            file: /tmp/image.jpg                # "file" is a path of local file or a URL
-            caption: This is a image caption    # File caption
-            filename: image.jpg                 # File name
+    runs:
+      - ymlr-telegram'sendPhoto:
+          chatID: ${TELEGRAM_CHAT_ID}
+          file: /tmp/image.jpg                # "file" is a path of local file or a URL
+          caption: This is a image caption    # File caption
+          filename: image.jpg                 # File name
 ```  
 
 
@@ -378,11 +378,11 @@ Reuse bot in the ymlr-telegram
 ```yaml
   - ymlr-telegram:
       token: ${BOT_TOKEN}
-      runs:
-        - ymlr-telegram'sendSticker:
-            chatID: ${TELEGRAM_CHAT_ID}
-            sticker: /tmp/image.jpg             # "file" is a character, path of local file or a URL
-            caption: This is a image caption    # File caption
+    runs:
+      - ymlr-telegram'sendSticker:
+          chatID: ${TELEGRAM_CHAT_ID}
+          sticker: /tmp/image.jpg             # "file" is a character, path of local file or a URL
+          caption: This is a image caption    # File caption
 ```  
 
 
