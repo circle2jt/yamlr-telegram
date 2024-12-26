@@ -24,11 +24,11 @@ import { SendAbstract } from './send.abstract'
   ```yaml
     - ymlr-telegram:
         token: ${BOT_TOKEN}
-        runs:
-          - ymlr-telegram'sendSticker:
-              chatID: ${TELEGRAM_CHAT_ID}
-              sticker: /tmp/image.jpg             # "file" is a character, path of local file or a URL
-              caption: This is a image caption    # File caption
+      runs:
+        - ymlr-telegram'sendSticker:
+            chatID: ${TELEGRAM_CHAT_ID}
+            sticker: /tmp/image.jpg             # "file" is a character, path of local file or a URL
+            caption: This is a image caption    # File caption
   ```
 */
 export class SendSticker extends SendAbstract {

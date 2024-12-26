@@ -11,15 +11,15 @@ import { type OnProps } from './on.props'
       ymlr-telegram'on:
         token: ${BOT_TOKEN}
         filter: text
-        runs:
-          # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
-          - vars:
-              message: ${$parentState.botCtx.message.text}
-          - echo: ${ $vars.message }
-          - exec'js: |
-              $parentState.botCtx.reply('Hi there')
+      runs:
+        # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
+        - vars:
+            message: ${$parentState.botCtx.message.text}
+        - echo: ${ $vars.message }
+        - exec'js: |
+            $parentState.botCtx.reply('Hi there')
 
-          - stop:                         # Stop bot here
+        - stop:                         # Stop bot here
   ```
 */
 export class On extends Handler {

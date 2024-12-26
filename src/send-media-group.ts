@@ -29,14 +29,14 @@ import { SendAbstract } from './send.abstract'
   ```yaml
     - ymlr-telegram:
         token: ${BOT_TOKEN}
-        runs:
-          - ymlr-telegram'sendMediaGroup:
-              chatID: ${TELEGRAM_CHAT_ID}
-              data:
-                - media: http://.../image.jpg                # "file" is a path of local file or a URL
-                  caption: This is a image caption           # File caption
-                  type: photo                                # File type must in [ photo, document, audio, video ]
-                  filename: image.jpg                        # File name
+      runs:
+        - ymlr-telegram'sendMediaGroup:
+            chatID: ${TELEGRAM_CHAT_ID}
+            data:
+              - media: http://.../image.jpg                # "file" is a path of local file or a URL
+                caption: This is a image caption           # File caption
+                type: photo                                # File type must in [ photo, document, audio, video ]
+                filename: image.jpg                        # File name
   ```
 */
 export class SendMediaGroup extends SendAbstract {
@@ -62,7 +62,7 @@ export class SendMediaGroup extends SendAbstract {
   async send(bot: Telegraf, opts: ExtraPhoto) {
     this.logger.debug(`⇢┆${this.chatIDs}┆⇢ \t%j`, this.data)
     const data = this.data.map(item => {
-      const { media, filename, ...itemData } = item as any
+      const { media, filename, caption, ...itemData } = item as any
       if ((media instanceof Buffer) || (media instanceof ReadableStream)) {
         itemData.media = { source: media }
       } else if (typeof media === 'string') {
@@ -73,6 +73,9 @@ export class SendMediaGroup extends SendAbstract {
       }
       if (filename) {
         itemData.media.filename = filename
+      }
+      if (caption) {
+        itemData.caption = this.getFullText(caption)
       }
       return itemData
     }) as any

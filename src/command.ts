@@ -11,15 +11,15 @@ import { Handler } from './handler.abstract'
       ymlr-telegram'command:
         token: ${BOT_TOKEN}
         name: custom           # /custom
-        runs:
-          # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
-          - vars:
-              message: ${ $parentState.botCtx.message.text }
-          - echo: ${ $vars.message }
-          - exec'js: |
-              $parentState.botCtx.reply('This is custom command')
+      runs:
+        # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
+        - vars:
+            message: ${ $parentState.botCtx.message.text }
+        - echo: ${ $vars.message }
+        - exec'js: |
+            $parentState.botCtx.reply('This is custom command')
 
-          - stop:                         # Stop bot here
+        - stop:                         # Stop bot here
   ```
 */
 export class Command extends Handler {

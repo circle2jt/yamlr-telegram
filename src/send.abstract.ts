@@ -22,6 +22,7 @@ export abstract class SendAbstract implements Element {
   notify?: boolean
   replyMessageID?: number
   removeMessageID?: number
+  icon?: string
   opts?: any
 
   type?: 'Markdown' | 'HTML'
@@ -68,6 +69,11 @@ export abstract class SendAbstract implements Element {
       await bot.telegram.pinChatMessage(chatID, messageID, { disable_notification: true })
     }
   }
+
+  getFullText(txt?: string) {
+    return this.icon ? `${this.icon} ${txt}` : txt
+  }
+
   abstract send(bot: Telegraf, opts: any): any
 
   dispose() { }

@@ -28,12 +28,12 @@ import { SendAbstract } from './send.abstract'
   ```yaml
     - ymlr-telegram:
         token: ${BOT_TOKEN}
-        runs:
-          - ymlr-telegram'send:
-              chatID: ${TELEGRAM_CHAT_ID}
-              text: Hi there
-              vars:
-                messageID: ${this.result.message_id}
+      runs:
+        - ymlr-telegram'send:
+            chatID: ${TELEGRAM_CHAT_ID}
+            text: Hi there
+            vars:
+              messageID: ${this.result.message_id}
   ```
 
   Edit a message
@@ -72,18 +72,19 @@ export class SendText extends SendAbstract {
   }
 
   async send(bot: Telegraf, opts: ExtraEditMessageText) {
-    this.logger.debug(`⇢┆${this.chatIDs}┆⇢ \t%s`, this.text)
+    const text = this.getFullText(this.text)
+    this.logger.debug(`⇢┆${this.chatIDs}┆⇢ \t%s`, text)
 
     const result = {} as any
     if (this.editMessageID) {
       result.edit = await Promise.all(this.chatIDs.map(async chatID => {
-        const rs = await bot.telegram.editMessageText(chatID, this.editMessageID, undefined, this.text || '', opts)
+        const rs = await bot.telegram.editMessageText(chatID, this.editMessageID, undefined, text || '', opts)
         await this.autoPin(bot, chatID, this.editMessageID)
         return rs
       }))
-    } else if (this.text) {
+    } else if (text) {
       result.send = await Promise.all(this.chatIDs.map(async chatID => {
-        const rs = await bot.telegram.sendMessage(chatID, this.text || '', opts)
+        const rs = await bot.telegram.sendMessage(chatID, text || '', opts)
         await this.autoPin(bot, chatID, rs.message_id)
         return rs
       }))

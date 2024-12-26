@@ -24,12 +24,12 @@ import { SendAbstract } from './send.abstract'
   ```yaml
     - ymlr-telegram:
         token: ${BOT_TOKEN}
-        runs:
-          - ymlr-telegram'sendPhoto:
-              chatID: ${TELEGRAM_CHAT_ID}
-              file: /tmp/image.jpg                # "file" is a path of local file or a URL
-              caption: This is a image caption    # File caption
-              filename: image.jpg                 # File name
+      runs:
+        - ymlr-telegram'sendPhoto:
+            chatID: ${TELEGRAM_CHAT_ID}
+            file: /tmp/image.jpg                # "file" is a path of local file or a URL
+            caption: This is a image caption    # File caption
+            filename: image.jpg                 # File name
   ```
 */
 export class SendPhoto extends SendAbstract {
@@ -68,7 +68,7 @@ export class SendPhoto extends SendAbstract {
     this.logger.debug(`⇢┆${this.chatIDs}┆⇢ \t%s`, this.file)
     const rs = await Promise.all(this.chatIDs.map(async chatID => {
       const rs = await bot.telegram.sendPhoto(chatID, this.source, {
-        caption: this.caption,
+        caption: this.getFullText(this.caption),
         ...opts
       })
       await this.autoPin(bot, chatID, rs.message_id)

@@ -11,15 +11,15 @@ import { Handler } from './handler.abstract'
       ymlr-telegram'action:
         token: ${BOT_TOKEN}
         name: callback
-        runs:
-          # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
-          - vars:
-              callbackData: ${$parentState.botCtx.update.callback_query.data}   # => VN/US
-          - echo: ${ $vars.callbackData }
-          - exec'js: |
-              $parentState.botCtx.reply('Picked ' + $vars.callbackData)
+      runs:
+        # $parentState.botCtx: is ref to telegraf in https://www.npmjs.com/package/telegraf
+        - vars:
+            callbackData: ${$parentState.botCtx.update.callback_query.data}   # => VN/US
+        - echo: ${ $vars.callbackData }
+        - exec'js: |
+            $parentState.botCtx.reply('Picked ' + $vars.callbackData)
 
-          - stop:                         # Stop bot here
+        - stop:                         # Stop bot here
 
     - ymlr-telegram'send:
         token: ${BOT_TOKEN}
